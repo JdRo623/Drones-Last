@@ -7,15 +7,16 @@ namespace CommandPattern.Commands
 {
     public class ShootCommand : Command
     {
-        
-        public ShootCommand()
+        private Weapon weapon;
+        public ShootCommand(Weapon weapon)
         {
+            this.weapon = weapon;
         }
 
 
         public override void Execute()
         {
-            Debug.Log("SHOOT");
+            weapon.Shoot();
         }
 
     }

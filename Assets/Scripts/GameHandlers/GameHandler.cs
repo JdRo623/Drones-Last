@@ -4,22 +4,21 @@ using UnityEngine;
 
 public class GameHandler : MonoBehaviour
 {
-
-    public static float playerInitLife = 100;
-    public static float primaryEnemyLife = 50;
-    public static float walkingDroneLife = 100;
-    public static float turretLife = 200;
-    public static float distance2Hit = 5;
-
-    // Start is called before the first frame update
-    void Start()
+    public void OnEnable()
     {
-        
+        PauseGame();
+    }
+    public void PauseGame()
+    {
+        Time.timeScale = 0;
     }
 
-    // Update is called once per frame
-    void Update()
+    public void ResumeGame()
     {
-        
+        Time.timeScale = 1;
+    }
+
+    public void QuitGame() {
+        Application.Quit();
     }
 }

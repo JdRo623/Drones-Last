@@ -15,13 +15,13 @@ public class EnemySpawnHandler : MonoBehaviour
     private Vector3 CalculateSpawnPoint()
     {
         spawnPosition = player.position;
-        randomPosition = new Vector3(Random.Range(-spawnRange, spawnRange), 0, Random.Range(-spawnRange, spawnRange));
+        randomPosition = new Vector3(Random.Range(-spawnRange, spawnRange), 10, Random.Range(-spawnRange, spawnRange));
 
         spawnPosition += randomPosition;
 
         while (!mapHandler.ValidatePositionWhitinRange(spawnPosition))
         {
-            randomPosition = new Vector3(Random.Range(-spawnRange, spawnRange), 0, Random.Range(-spawnRange, spawnRange));
+            randomPosition = new Vector3(Random.Range(-spawnRange, spawnRange), 10, Random.Range(-spawnRange, spawnRange));
             spawnPosition = player.position + randomPosition;
         }
 

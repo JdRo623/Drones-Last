@@ -7,7 +7,10 @@ using UnityEngine;
 public class AvatarController : MonoBehaviour
 {
     public MovableObject movableObject;
+    public WeaponInventory weaponInventory;
+
     private CustomJoystick customJoystick;
+    private AutomaticEnemyDetection automaticEnemyDetection;
 
     private Command touchingScreen;
     private CommandParam movingJoystick;
@@ -18,7 +21,7 @@ public class AvatarController : MonoBehaviour
     {
         touchingScreen = new MoveFowardCommand(movableObject);
         movingJoystick = new RotateCommand(movableObject);
-        enemyDetection = new ShootCommand();
+        enemyDetection = new ShootCommand(weaponInventory.GetCurrentWeapon());
         doubleTouch = new NoActionCommand();
     }
 
@@ -26,6 +29,8 @@ public class AvatarController : MonoBehaviour
     {
         customJoystick = new CustomJoystick();
         customJoystick.OnEnable();
+
+        automaticEnemyDetection = new AutomaticEnemyDetection(weaponInventory);
 
     }
 
@@ -37,20 +42,19 @@ public class AvatarController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+       
         if (customJoystick.IsTouchingTheScreen()&& customJoystick.IsAbleToMove())
         {
             ExecuteNewCommand(touchingScreen);
             ExecuteNewCommandParam(movingJoystick, customJoystick.RotationAngle());
-            ExecuteNewCommand(enemyDetection);
         }
-        else if (Input.GetKeyDown(KeyCode.S))
-        {
+
+        if (automaticEnemyDetection.GetIsLookingAnEnemy()) {
             ExecuteNewCommand(enemyDetection);
         }
     }
 
     public void DoubleTap(int taps) {
-        print(taps);
         if (taps>=2) { 
            if (touchingScreen is MoveFowardCommand)
            {
